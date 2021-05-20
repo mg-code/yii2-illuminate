@@ -7,18 +7,18 @@
 
 namespace Yii2tech\Illuminate\Yii\Log;
 
-use Illuminate\Log\Logger as LaravelLogger;
+use Illuminate\Log\LogManager;
 use Psr\Log\LogLevel;
 use yii\log\Logger;
 
 /**
  * Illuminated trait provides bridge to Laravel logger.
  *
- * @see \Illuminate\Log\Logger
+ * @see \Illuminate\Log\LogManager
  *
  * @mixin \yii\base\Component
  *
- * @property \Illuminate\Log\Logger $illuminateLogger related Laravel logger instance.
+ * @property \Illuminate\Log\LogManager $illuminateLogger related Laravel logger instance.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
@@ -26,14 +26,14 @@ use yii\log\Logger;
 trait Illuminated
 {
     /**
-     * @var \Illuminate\Log\Logger laravel logger instance.
+     * @var LogManager laravel logger instance.
      */
     private $_illuminateLogger;
 
     /**
-     * @return \Illuminate\Log\Logger
+     * @return LogManager
      */
-    public function getIlluminateLogger(): LaravelLogger
+    public function getIlluminateLogger(): LogManager
     {
         if ($this->_illuminateLogger === null) {
             $this->_illuminateLogger = $this->defaultIlluminateLogger();
@@ -43,10 +43,10 @@ trait Illuminated
     }
 
     /**
-     * @param  \Illuminate\Log\Logger  $laravelLogger
+     * @param LogManager $laravelLogger
      * @return static self reference.
      */
-    public function setIlluminateLogger(LaravelLogger $laravelLogger): self
+    public function setIlluminateLogger(LogManager $laravelLogger): self
     {
         $this->_illuminateLogger = $laravelLogger;
 
@@ -54,11 +54,11 @@ trait Illuminated
     }
 
     /**
-     * Returns default value for {@see $illuminateLogger}
+     * Returns default value for {@see LogManager}
      *
-     * @return Logger logger instance.
+     * @return LogManager logger instance.
      */
-    protected function defaultIlluminateLogger(): Logger
+    protected function defaultIlluminateLogger(): LogManager
     {
         return \Illuminate\Support\Facades\Log::getFacadeRoot();
     }
